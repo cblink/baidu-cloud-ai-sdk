@@ -1,6 +1,8 @@
 <h1 align="center"> baidu-cloud-ai-sdk </h1>
 
-<p align="center"> .</p>
+<p align="center"> 
+    基于百度智能云文心AI绘画相关的 PHP SDK，官方文档地址：https://cloud.baidu.com/doc/NLP/s/Ml9i5amtk
+</p>
 
 
 ## Installing
@@ -11,17 +13,28 @@ $ composer require cblink/baidu-cloud-ai-sdk -vvv
 
 ## Usage
 
-TODO
+```php
+$c = new ApiClient();
 
-## Contributing
+//设置appkey和appsecret
+$c->setConfig($this->config);
+$service = new \Cblink\BaiduCloudAiSdk\ApiService();
 
-You can contribute in one of three ways:
+//获取token（建议做缓存）
+//$token = $c->getToken();
 
-1. File bug reports using the [issue tracker](https://github.com/cblink/baidu-cloud-ai-sdk/issues).
-2. Answer questions or fix bugs on the [issue tracker](https://github.com/cblink/baidu-cloud-ai-sdk/issues).
-3. Contribute new features or update the wiki.
+//设置token
+$c->setToken($token);
 
-_The code contribution process is not very formal. You just need to make sure that you follow the PSR-0, PSR-1, and PSR-2 coding guidelines. Any new code contributions must be accompanied by unit tests where applicable._
+//发起画图请求（异步）
+$r = $c->request($service->getWenXinTxt2imgApi('美女', '1024*1024', '二次元'));
+
+//获取画图结果
+$r = $c->request($service->getWenXinImgResultApi($r['taskId']));
+```
+
+## Tip
+- 目前获取画图结果的接口报错，等待官方回复
 
 ## License
 
